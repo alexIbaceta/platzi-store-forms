@@ -9,8 +9,9 @@ export class BasicFormComponent implements OnInit {
   nameField = new FormControl();
   emailField = new FormControl();
   phoneField = new FormControl();
-  colorField = new FormControl();
+  colorField = new FormControl('#000000');
   dateField = new FormControl();
+  ageField = new FormControl(12);
   constructor() { }
 
   ngOnInit(): void {
