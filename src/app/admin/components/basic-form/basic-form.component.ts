@@ -1,32 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-basic-form',
   templateUrl: './basic-form.component.html',
   styleUrls: ['./basic-form.component.scss']
 })
 export class BasicFormComponent implements OnInit {
-form = new FormGroup({
-  name : new FormControl('', [Validators.required,Validators.maxLength(10)]),
-  email : new FormControl(),
-  phone : new FormControl(),
-  color : new FormControl('#000000'),
-  date : new FormControl(),
-  age : new FormControl(12),
-  category : new FormControl('category-2'),
-  tag : new FormControl(''),
-  agree : new FormControl(true),
-  gender : new FormControl('female'),
-  zone: new FormControl('zona 3')  
-})
+  form:FormGroup;
 
-  constructor() { }
+  constructor( private formBuilder:FormBuilder) {
+    this.buildForm();
+  }
+  
+  
+  private buildForm(){
+    this.form = this.formBuilder.group({
+      name : ['', [Validators.required,Validators.maxLength(10)]],
+      email : [],
+      phone : ['',[Validators.required, Validators.maxLength(10)]],
+      color : ['#000000'],
+      date : [],
+      age : [12],
+      category : ['category-2'],
+      tag : [''],
+      agree : [false],
+      gender : ['female'],
+      zone: ['zona 3']
+    })
+    
+  }
 
   ngOnInit(): void {
     this.nameField.valueChanges
     .subscribe(value=>{
         console.log(value);
     });
+
+    this.form.valueChanges
+      .subscribe(item=>{
+        console.log(item);
+      })
   }
 
   getNameValue(){
@@ -35,9 +48,17 @@ form = new FormGroup({
   get isNameFieldValid(){
       return this.nameField.touched && this.nameField.valid;
   }
-
+  
   get isNameFieldInValid(){
-      return this.nameField.touched && this.nameField.invalid;
+    return this.nameField.touched && this.nameField.invalid;
+  }
+  
+  get isPhoneFieldInValid(){
+    return this.phoneField.touched && this.phoneField.invalid;
+  }
+  
+  get isPhoneFieldValid(){
+      return this.phoneField.touched && this.phoneField.valid;
   }
 
   get nameField(){
@@ -75,6 +96,10 @@ form = new FormGroup({
   }
 
   save(event){
-    console.log(this.form.value);
+    if (this.form.valid){
+      console.log(this.form.value);
+    }else{
+      this.form.markAllAsTouched();
+    }
   }
 }
