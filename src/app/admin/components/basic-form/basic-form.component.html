@@ -10,16 +10,22 @@
         <button (click)="getNameValue()"  [disabled]="nameField.invalid" >Get value</button>
     </p>
     
-    <div class="messages"  [class.active]="isNameFieldInValid" >
-        <p *ngIf="nameField.touched && nameField.hasError('required')">
+    <div class="messages"  [class.active]="nameField.touched &&  isNameFieldInValid" >
+        <p *ngIf="nameField.hasError('required')">
             <strong>
                 Es necesario ingresar el nombre.
             </strong>
         </p>
         
-        <p *ngIf="nameField.touched && nameField.hasError('maxlength')">
+        <p *ngIf="nameField.hasError('maxlength')">
             <strong>
                 El tamaño maximo es de 10 caracteres
+            </strong>
+        </p>
+
+        <p *ngIf="nameField.hasError('pattern')">
+            <strong>
+                El nombre solo puede tener caracteres
             </strong>
         </p>
     </div>
@@ -27,9 +33,28 @@
     
     <p>
         Email: {{ emailField.value }}
-        <input type="email" formControlName="email"  >
+        <input type="email" formControlName="email"  
+        [class.is-valid]="isEmailFieldValid"
+        [class.is-invalid]="isEmailFieldInValid"
+        >
     </p>
+
     
+    <div class="messages"  [class.active]="isEmailFieldInValid" >
+        <p *ngIf="emailField.touched && emailField.hasError('required')">
+            <strong>
+                Es necesario ingresar el Correo Electronico.
+            </strong>
+        </p>
+        
+        <p *ngIf="emailField.touched && emailField.hasError('email')">
+            <strong>
+                Este no es un correo electronico valido
+            </strong>
+        </p>
+    </div>
+
+
     <p>
         Phone: {{ phoneField.value }}
         <input type="text" formControlName="phone"  
@@ -66,9 +91,33 @@
     
     <p>
         Edad: {{ ageField.value }}
-        <input type="number" formControlName="age"  >
+        <input type="number" formControlName="age"  
+        [class.is-valid]="isAgeFieldValid"
+        [class.is-invalid]="isAgeFieldValid"
+        >
     </p>
+
+    <div class="messages"  [class.active]=" ageField.touched &&  isAgeFieldInValid" >
+        <p *ngIf="ageField.hasError('required')">
+            <strong>
+                Es necesario ingresar la edad
+            </strong>
+        </p>
+        
+        <p *ngIf="ageField.hasError('min')">
+            <strong>
+                Debe ser mayor de edad
+            </strong>
+        </p>
+        <p *ngIf="ageField.hasError('max')">
+            <strong>
+                Supera la edad limite
+            </strong>
+        </p>
+    </div>
     
+
+
     <p>
         Category: {{ categoryField.value }}
         <select formControlName="category" >
@@ -90,8 +139,24 @@
     
     <p>
         Agree: {{ agreeField.value }}
-        <input type="checkbox" formControlName="agree"  >
+        <input type="checkbox" formControlName="agree"  
+        [class.is-valid]="isAgreeFieldValid"
+        [class.is-invalid]="isAgreeFieldValid"
+        >
     </p>
+    <div class="messages"  [class.active]=" agreeField.touched &&  isAgreeFieldInValid" >
+        <p *ngIf="agreeField.hasError('required')">
+            <strong>
+                No ha especificado acuerdo
+            </strong>
+        </p>
+        
+        <p *ngIf="agreeField.hasError('requiredTrue')">
+            <strong>
+                Debe aceptar las condiciones
+            </strong>
+        </p>
+    </div>
     
     <p>
         Gender: {{ genderField.value }}

@@ -15,15 +15,15 @@ export class BasicFormComponent implements OnInit {
   
   private buildForm(){
     this.form = this.formBuilder.group({
-      name : ['', [Validators.required,Validators.maxLength(10)]],
-      email : [],
+      name : ['', [Validators.required,Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]],
+      email : ['',[Validators.required, Validators.email]],
       phone : ['',[Validators.required, Validators.maxLength(10)]],
       color : ['#000000'],
       date : [],
-      age : [12],
+      age : [18, [Validators.required,  Validators.min(18), Validators.max(100)]],
       category : ['category-2'],
       tag : [''],
-      agree : [false],
+      agree : [false, [Validators.requiredTrue]],
       gender : ['female'],
       zone: ['zona 3']
     })
@@ -47,26 +47,34 @@ export class BasicFormComponent implements OnInit {
   }
   get isNameFieldValid(){
       return this.nameField.touched && this.nameField.valid;
-  }
-  
-  get isNameFieldInValid(){
-    return this.nameField.touched && this.nameField.invalid;
-  }
-  
-  get isPhoneFieldInValid(){
-    return this.phoneField.touched && this.phoneField.invalid;
-  }
-  
-  get isPhoneFieldValid(){
+    }
+    
+    get isNameFieldInValid(){
+      return this.nameField.touched && this.nameField.invalid;
+    }
+    
+    get isPhoneFieldInValid(){
+      return this.phoneField.touched && this.phoneField.invalid;
+    }
+    
+    get isPhoneFieldValid(){
       return this.phoneField.touched && this.phoneField.valid;
-  }
+    }
+    
+    get nameField(){
+      return this.form.get('name');
+    }
+    get emailField(){
+      return this.form.get('email');
+    }
+    get isEmailFieldInValid(){
+      return this.emailField.touched && this.emailField.invalid;
+    }
+    
+    get isEmailFieldValid(){
+      return this.emailField.touched && this.emailField.valid;
+    }
 
-  get nameField(){
-    return this.form.get('name');
-  }
-  get emailField(){
-    return this.form.get('email');
-  }
   get phoneField(){
     return this.form.get('phone');
   }
@@ -79,6 +87,17 @@ export class BasicFormComponent implements OnInit {
   get ageField(){
     return this.form.get('age');
   }
+  
+  get isAgeFieldInValid(){
+    return this.ageField.touched && this.ageField.invalid;
+  }
+
+  get isAgeFieldValid(){
+    return this.ageField.touched && this.ageField.valid;
+  }
+
+  
+
   get categoryField(){
     return this.form.get('category');
   }
@@ -88,6 +107,17 @@ export class BasicFormComponent implements OnInit {
   get agreeField(){
     return this.form.get('agree');
   }
+
+  get isAgreeFieldInValid(){
+    return this.agreeField.touched && this.agreeField.invalid;
+  }
+
+  get isAgreeFieldValid(){
+    return this.agreeField.touched && this.agreeField.valid;
+  }
+
+
+
   get genderField(){
     return this.form.get('gender');
   }
