@@ -15,7 +15,10 @@ export class BasicFormComponent implements OnInit {
   
   private buildForm(){
     this.form = this.formBuilder.group({
-      name : ['', [Validators.required,Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]],
+      fullName: this.formBuilder.group({
+        name : ['', [Validators.required,Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]],
+        last: ['', [Validators.required,Validators.maxLength(10), Validators.pattern(/^[a-zA-Z ]+$/)]]
+      }),
       email : ['',[Validators.required, Validators.email]],
       phone : ['',[Validators.required, Validators.maxLength(10)]],
       color : ['#000000'],
@@ -31,26 +34,41 @@ export class BasicFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.nameField.valueChanges
-    .subscribe(value=>{
-        console.log(value);
-    });
+    // this.nameField.valueChanges
+    // .subscribe(value=>{
+    //     console.log(value);
+    // });
 
-    this.form.valueChanges
-      .subscribe(item=>{
-        console.log(item);
-      })
+    // this.form.valueChanges
+    //   .subscribe(item=>{
+    //     console.log(item);
+    //   })
   }
 
   getNameValue(){
     console.log(this.nameField.value);
   }
-  get isNameFieldValid(){
+    get nameField(){
+      return this.form.get('fullName.name');
+    }
+    get lastField(){
+      return this.form.get('fullName.last');
+    }
+
+    get isNameFieldValid(){
       return this.nameField.touched && this.nameField.valid;
+    }
+
+    get isLastFieldValid(){
+      return this.lastField.touched && this.lastField.valid;
     }
     
     get isNameFieldInValid(){
       return this.nameField.touched && this.nameField.invalid;
+    }
+
+    get isLastFieldInValid(){
+      return this.lastField.touched && this.lastField.invalid;
     }
     
     get isPhoneFieldInValid(){
@@ -61,9 +79,6 @@ export class BasicFormComponent implements OnInit {
       return this.phoneField.touched && this.phoneField.valid;
     }
     
-    get nameField(){
-      return this.form.get('name');
-    }
     get emailField(){
       return this.form.get('email');
     }
