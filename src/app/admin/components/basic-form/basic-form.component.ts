@@ -7,7 +7,16 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 })
 export class BasicFormComponent implements OnInit {
   form:FormGroup;
-
+  
+  categorias=[
+    {name:'Categoria 1', valor:'categoty-1'},
+    {name:'Categoria 2', valor:'categoty-2'},
+    {name:'Categoria 3', valor:'categoty-3'},
+    {name:'Categoria 4', valor:'categoty-4'},
+    {name:'Categoria 5', valor:'categoty-5'}];
+  
+  categoriaSelec=this.categorias[3].valor;
+  genderSelect:'other';
   constructor( private formBuilder:FormBuilder) {
     this.buildForm();
   }
@@ -24,7 +33,7 @@ export class BasicFormComponent implements OnInit {
       color : ['#000000'],
       date : [],
       age : [18, [Validators.required,  Validators.min(18), Validators.max(100)]],
-      category : ['category-2'],
+      category : [this.categoriaSelec],
       tag : [''],
       agree : [false, [Validators.requiredTrue]],
       gender : ['female'],
@@ -32,6 +41,8 @@ export class BasicFormComponent implements OnInit {
     })
     
   }
+
+    
 
   ngOnInit(): void {
     // this.nameField.valueChanges
