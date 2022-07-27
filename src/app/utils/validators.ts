@@ -10,5 +10,22 @@ export class MyValidators {
     }
     return null;
   }
+  
+  static validPassword = (control:AbstractControl)=>{
+      const value= control.value;
+      if (!containsNumber(value)){
+        return {invalid_password:true};
+      }
+      return null;
+  }
+  
+}
 
+
+const containsNumber = (value:string):boolean=>{
+  return value.split('').find(v=>isNumber(v))!==undefined;
+}
+
+const isNumber = (value:string)=>{
+  return !isNaN(parseInt(value,10));
 }

@@ -18,6 +18,11 @@
             <mat-label>Password</mat-label>
             <input placeholder="password" formControlName="password" matInput type="password">
           </mat-form-field>
+          <div *ngIf="passwordField.touched &&  passwordField.invalid">
+            <mat-error *ngIf="passwordField.hasError('invalid_password')">
+              Debe tener un Numero
+            </mat-error>
+          </div>
         </div>
       </div>
       <div class="row">
