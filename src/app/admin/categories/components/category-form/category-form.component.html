@@ -19,15 +19,15 @@
             </div>
             <div class="row">
                 <div class="col-xs">
-                    <mat-form-field>
-                        <mat-label>imagen</mat-label>
-                        <input type="text" placeholder="Imagen" formControlName="image" matInput>
+                    <img *ngIf="imageField.value"  [src]="imageField.value"/>
+                        <input (change)="uploadFile($event)" type="file" placeholder="Imagen">
+                        <mat-progress-bar mode="determinate" [value]="avance"  ></mat-progress-bar>
+
                         <div class="messages" *ngIf="imageField.touched && imageField.invalid">
                             <mat-error *ngIf="imageField.hasError('required')">
                                 Imagen Requerida
                             </mat-error>
                         </div>
-                    </mat-form-field>
                 </div>
             </div>
         </mat-card-content>
