@@ -73,8 +73,9 @@ private getCategory(){
   this.categoriesService.getCategory(id)
   .subscribe(rta=>{
     console.log(rta);
-      // this.router.navigate(['./admin/categories/']);
       this.form.patchValue(rta);
+      // this.nameField.setValue(rta.name);
+      // this.imageField.setValue(rta.image);
   })
 
 }
