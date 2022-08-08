@@ -52,8 +52,13 @@ get imageField(){
 }
 
 save(event){
+  console.log('save');
   if(this.form.valid){
+    if (this.categoryId){
+      this.updateCategory();
+    }else{
       this.createCategory();
+    }
   }else{
     this.form.markAllAsTouched();
   }
@@ -67,6 +72,17 @@ private createCategory(){
       this.router.navigate(['./admin/categories/']);
   })
 }
+
+private updateCategory(){
+  const data = this.form.value;
+  this.categoriesService.updateCategory(this.categoryId, data)
+  .subscribe(rta=>{
+    console.log(rta);
+      this.router.navigate(['./admin/categories/']);
+  })
+}
+
+
 
 private getCategory(){
   const id=this.categoryId
