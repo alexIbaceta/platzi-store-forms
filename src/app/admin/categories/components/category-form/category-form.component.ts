@@ -15,8 +15,15 @@ import { Category } from '../../../../core/models/categories.model';
 export class CategoryFormComponent implements OnInit {
   form: FormGroup;
   avance:number=0;
+  isNew:boolean=true;
 
-  @Input() category:Category;
+  @Input()
+  set category(data:Category){
+    if(data){
+      this.isNew=false;
+      this.form.patchValue(data);
+    }
+  }
   @Output() create = new EventEmitter();
   @Output() update= new EventEmitter();
   // categoryId:string;
@@ -50,12 +57,10 @@ get imageField(){
 save(event){
   console.log('save');
   if(this.form.valid){
-    if (this.category){
-      // this.updateCategory();
-      this.update.emit(this.form.value);
-    }else{
-      // this.createCategory();
+    if (this.isNew){
       this.create.emit(this.form.value);
+    }else{
+      this.update.emit(this.form.value);
     }
   }else{
     this.form.markAllAsTouched();
