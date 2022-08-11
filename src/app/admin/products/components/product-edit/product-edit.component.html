@@ -7,7 +7,15 @@
         <div class="row">
           <div class="col-xs">
             <mat-form-field>
-              <input placeholder="Title" formControlName="title" matInput type="text">
+              <input placeholder="name" formControlName="name" matInput type="text">
+                  <div class="messages" *ngIf="nameField.touched && nameField.invalid" >
+                    <mat-error *ngIf="nameField.hasError('required')">
+                        El Nombre es requerido
+                    </mat-error>
+                    <mat-error *ngIf="nameField.hasError('minlength')">
+                        El Nombre debe tener minimo 4 caracteres
+                    </mat-error>
+                  </div>              
             </mat-form-field>
           </div>
         </div>
@@ -15,17 +23,45 @@
           <div class="col-xs">
             <mat-form-field>
               <input placeholder="Price" formControlName="price" matInput type="number">
+                  <div class="messages" *ngIf="priceField.touched && priceField.invalid" >
+                    <mat-error *ngIf="priceField.hasError('required')">
+                        El Precio es requerido
+                    </mat-error>
+                    <mat-error *ngIf="priceField.hasError('price_invalid')">
+                        Precio no debe superar los 10000
+                    </mat-error>
+                  </div>              
             </mat-form-field>
-            <div *ngIf="priceField.errors && priceField.dirty">
-              <p *ngIf="priceField.hasError('price_invalid')">no te debes pasar de 10000</p>
-              <p *ngIf="priceField.hasError('required')">el campo es requerido</p>
-            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs">
+              <mat-form-field>
+                <textarea placeholder="Desciption" formControlName="description" matInput></textarea>
+                <div class="messages" *ngIf="descriptionField.touched && descriptionField.invalid" >
+                  <mat-error *ngIf="descriptionField.hasError('required')">
+                      La descripcion es requerido
+                  </mat-error>
+                  <mat-error *ngIf="descriptionField.hasError('minlength')">
+                      La descripcion debe tener minimo 10 caracteres
+                  </mat-error>
+                </div>              
+              </mat-form-field>
           </div>
         </div>
         <div class="row">
           <div class="col-xs">
             <mat-form-field>
-              <textarea placeholder="Text" formControlName="description" matInput></textarea>
+              <!-- <textarea placeholder="Desciption" formControlName="description" matInput></textarea> -->
+              <mat-label>Category</mat-label>
+              <mat-select formControlName="category_id">
+                <mat-option *ngFor="let category of categories" [value]="category._id" >{{category.name}}</mat-option>
+              </mat-select>
+                <div class="messages" *ngIf="categoryField.touched && categoryField.invalid" >
+                  <mat-error *ngIf="categoryField.hasError('required')">
+                      La Categoria ID es requerida
+                  </mat-error>
+                </div>              
             </mat-form-field>
           </div>
         </div>

@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
-
 import { finalize } from 'rxjs/operators';
-
 import { MyValidators } from './../../../../utils/validators';
 import { ProductsService } from './../../../../core/services/products/products.service';
-
 import { Observable } from 'rxjs';
-
+import { CategoriesService } from '../../../../core/services/categories.service';
+import { Category } from '../../../../core/models/categories.model';
 @Component({
   selector: 'app-product-create',
   templateUrl: './product-create.component.html',
@@ -19,23 +17,27 @@ export class ProductCreateComponent implements OnInit {
 
   form: FormGroup;
   image$: Observable<any>;
+  categories:Category[]=[];
 
   constructor(
     private formBuilder: FormBuilder,
     private productsService: ProductsService,
     private router: Router,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private categoriesService:CategoriesService
   ) {
     this.buildForm();
   }
 
   ngOnInit() {
+    this.getCategories();
   }
 
   saveProduct(event: Event) {
     event.preventDefault();
     if (this.form.valid) {
       const product = this.form.value;
+      // console.log(product);
       this.productsService.createProduct(product)
       .subscribe((newProduct) => {
         console.log(newProduct);
@@ -72,6 +74,13 @@ export class ProductCreateComponent implements OnInit {
       category_id: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(10)]],
     });
+  }
+
+  private getCategories(){
+    this.categoriesService.getAllCategories()
+      .subscribe(data=>{
+          this.categories=data;
+      })
   }
 
   get priceField() {
