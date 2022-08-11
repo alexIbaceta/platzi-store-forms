@@ -17,6 +17,15 @@ export class ProductEditComponent implements OnInit {
   form: FormGroup;
   id: string;
   categories:Category[]=[];
+  states=[
+    {name:'Arizona',abbrev:'AZ'},
+    {name:'California',abbrev:'CA'},
+    {name:'Colorado',abbrev:'CO'},
+    {name:'New York',abbrev:'NY'},
+    {name:'Pennsylvania',abbrev:'PA'}
+  ];
+
+
   constructor(
     private formBuilder: FormBuilder,
     private productsService: ProductsService,
@@ -34,7 +43,7 @@ export class ProductEditComponent implements OnInit {
       this.id = params.id;
       this.productsService.getProduct(this.id)
       .subscribe(product => {
-        this.form.patchValue(product);
+        this.form.patchValue({...product, state:this.states[3]});
       });
     });
   }
@@ -43,11 +52,12 @@ export class ProductEditComponent implements OnInit {
     event.preventDefault();
     if (this.form.valid) {
       const product = this.form.value;
-      this.productsService.updateProduct(this.id, product)
-      .subscribe((newProduct) => {
-        console.log(newProduct);
-        this.router.navigate(['./admin/products']);
-      });
+      console.log(product);
+      // this.productsService.updateProduct(this.id, product)
+      // .subscribe((newProduct) => {
+      //   console.log(newProduct);
+      //   this.router.navigate(['./admin/products']);
+      // });
     }
   }
 
@@ -64,21 +74,28 @@ export class ProductEditComponent implements OnInit {
       price: ['', [Validators.required, MyValidators.isPriceValid]],
       image: [''],
       description: ['', [Validators.required]],
-      category_id: ['', [Validators.required]]
+      category_id: ['', [Validators.required]],
+      state:['',[Validators.required]]
     });
   }
 
   get priceField() {
     return this.form.get('price');
   }
+
   get nameField() {
     return this.form.get('name');
   }
+  
   get descriptionField() {
     return this.form.get('description');
   }
   get categoryField() {
     return this.form.get('category_id');
+  }
+
+  get stateField(){
+    return this.form.get('state');
   }
 
 }

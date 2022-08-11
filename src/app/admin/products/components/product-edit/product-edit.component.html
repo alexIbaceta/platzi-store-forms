@@ -65,6 +65,31 @@
             </mat-form-field>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-xs">
+            <mat-form-field>
+              <mat-label>State</mat-label>
+              <mat-select formControlName="state">
+                <mat-option *ngFor="let state of states" [value]="state" >{{state.name}}</mat-option>
+              </mat-select>
+                <div class="messages" *ngIf="stateField.touched && stateField.invalid" >
+                  <mat-error *ngIf="stateField.hasError('required')">
+                      State requerido
+                  </mat-error>
+                </div>              
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs">
+              <select formControlName="state">
+                <option *ngFor="let state of states" [ngValue]="state" >{{state.name}}</option>
+              </select>
+          </div>
+        </div>
+
       </mat-card-content>
       <mat-card-actions>
         <button [disabled]="form.invalid" mat-raised-button type="submit">Guardar</button>
