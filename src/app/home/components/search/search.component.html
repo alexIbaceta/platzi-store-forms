@@ -4,3 +4,9 @@
 <p>
     {{searchField.value}}
 </p>
+<div class="images-grid" >
+    <div class="images" *ngFor="let result of results" >
+        <img [src]="result.url" [width]="result.width" [height]="result.height" alt="">
+    </div>
+
+</div>
