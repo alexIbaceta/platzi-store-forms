@@ -24,7 +24,6 @@
       <div class="row">
         <div class="col-xs">
           <mat-form-field>
-            <!-- <input placeholder="categoryId" formControlName="category_id" matInput type="text"> -->
             <mat-label>Seleccione Categoria</mat-label>
             <mat-select formControlName="category_id">
                 <mat-option *ngFor="let category of categories" [value]="category._id">
@@ -37,6 +36,11 @@
                 </mat-error>
               </div>
           </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs">
+            <app-stepper formControlName="stock" ></app-stepper>
         </div>
       </div>
       <div class="row">
